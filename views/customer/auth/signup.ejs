@@ -5,6 +5,42 @@
     <main>
         <h1>Create New Account</h1>
         <form action="">
+            <p>
+                <label for="user-email">E-mail</label>
+                <input type="email" id="user-email" name="email" required>
+            </p>
+            <p>
+                <label for="confirm-email">E-mail</label>
+                <input type="email" id="confirm-email" name="confirm-email" required>
+            </p>
+            <p>
+                <label for="user-password">Password</label>
+                <input type="password" id="user-password" name="password" required minlength="6">
+            </p>
+            <p>
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" required>
+            </p>
+            <hr>
+            <p>
+                <label for="user-name">Full Name</label>
+                <input type="text" id="user-name" name="name" required>
+            </p>
+            <p>
+                <label for="street">Street</label>
+                <input type="text" id="street" name="street" required>
+            </p>
+            <p>
+                
+                <label for="postal-code">Postal Code</label>
+                <input type="text" id="postal-code" name="postal-code" required minlength="6" maxlength="6">
+            </p>
+            <p>
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" required>
+            </p>
+            <button class="btn">Create Account</button>
+            <p id="switch-form"><a href="/login">Login instead</a></p>
         </form>
     </main>
 <%- include("../includes/footer") %> 
