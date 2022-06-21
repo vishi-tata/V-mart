@@ -73,10 +73,20 @@ a {
   border-radius: var(--border-radius-small);
 }
 
+.btn-alt{
+  background-color: transparent;
+  color: var(--color-primary-500);
+}
+
 .btn:hover,
 .btn:active {
   background-color: var(--color-primary-700);
   border-color: var(--color-primary-700);
+}
+
+.btn-alt:hover,
+.btn-alt:active{
+  background-color: var(--color-primary-500-bg);
 }
 
 .alert {
