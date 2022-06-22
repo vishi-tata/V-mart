@@ -16,11 +16,12 @@ const createSessionConfig = require("./config/session");
 
 const app = express();
 
-app.set("view engine","ejs");
+app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static("public"));
-app.use(express.urlencoded({extended: false}));
+app.use("/products/assets", express.static("product-data"));
+app.use(express.urlencoded({ extended: false }));
 
 const sessionConfig = createSessionConfig();
 
@@ -33,13 +34,13 @@ app.use(checkAuthStatusMiddleware);
 app.use(baseRoutes);
 app.use(authRoutes);
 app.use(productsRoutes);
-app.use("/admin",adminRoutes);
+app.use("/admin", adminRoutes);
 
 app.use(errorHandlerMiddleware);
 
-db.connectToDatabase().then(function(){
+db.connectToDatabase().then(function () {
     app.listen(3000);
-}).catch(function(error){
+}).catch(function (error) {
     console.log("Failed to connect to database!");
     console.log(error)
 });
