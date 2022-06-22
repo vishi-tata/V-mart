@@ -73,6 +73,11 @@ class Product {
     this.imagePath = `product-data/images/${this.image}`;
     this.imageUrl = `/products/assets/images/${this.image}`;
   }
+
+  remove(){
+    const prodId = new mongoDb.ObjectId(this.id);
+    return db.getDb().collection("products").deleteOne({_id: prodId})
+  }
 }
 
 module.exports = Product;
