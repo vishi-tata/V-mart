@@ -61,7 +61,7 @@ class Product {
       throw error;
     }
 
-    return product;
+    return new Product(product);
   }
 
   replaceImage(newImage){

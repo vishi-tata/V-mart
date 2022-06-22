@@ -3,6 +3,9 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/",function(req,res){
+    if(res.locals.isAdmin){
+        return res.redirect("/admin/products");
+    }
     res.redirect("/products");    
 });
 
