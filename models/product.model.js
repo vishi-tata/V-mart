@@ -17,12 +17,9 @@ class Product {
   static async findAll(){
     let products = await db.getDb().collection("products").find().toArray();
     
-    products = products.map(function(productDocument){
+    return products.map(function(productDocument){
         return new Product(productDocument);
     });
-
-    console.log(products);
-    return products;
 
 }
 
@@ -34,7 +31,7 @@ class Product {
         description: this.description,
         image: this.image,
     }
-    await db.getDb().collection("products").insertOne({productData});
+    await db.getDb().collection("products").insertOne(productData);
   }
 }
 
