@@ -1,35 +1,12 @@
-<%- include("../../shared/includes/head",{pageTitle: "New Product"}) %> 
-<link rel="stylesheet" href="/styles/forms.css">
-</head>
-<body>
-    <%- include("../../shared/includes/header") %> 
-    <main>
-        <h1>Add New Product</h1>
-        <form action="/admin/products?_csrf=<%= locals.csrfToken %>" method="POST" enctype="multipart/form-data">
-            <p>
-                <label for="title">Product Title</label>
-                <input type="text" id="title" name="title" required>
-            </p>
-            <p>
-                <label for="image">Image</label>
-                <input type="file" id="image" name="image" required accept="image/png, image/jpg">
-            </p>
-            <p>
-                <label for="summary">Product summary</label>
-                <input type="text" id="summary" name="summary" required maxlength="250">
-            </p>
-            <p>
-                <label for="price">Product price</label>
-                <input type="number" id="price" name="price" required min="1" step="1">
-            </p>
-            <p>
-                <label for="description">Product description</label>
-                <textarea id="description" name="description" required rows="7"></textarea>
-            </p>
-            <p>
-                <button type="reset" class="btn btn-alt">Reset</button>
-                <button class="btn">Submit</button>
-            </p>
-        </form>
-    </main>
-<%- include("../../shared/includes/footer") %> 
+<%- include("../../shared/includes/head",{pageTitle: "New Product" }) %>
+    <link rel="stylesheet" href="/styles/forms.css">
+    </head>
+
+    <body>
+        <%- include("../../shared/includes/header") %>
+            <main>
+                <h1>Add New Product</h1>
+                <%- include("includes/product-form",{submitPath: "/"
+                    ,product:{title:"",summary:"",price:"",description:""}, imageRequired:true}) %>
+            </main>
+            <%- include("../../shared/includes/footer") %>
