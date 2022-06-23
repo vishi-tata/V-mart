@@ -18,4 +18,4 @@ function initializeCart(req, res, next) {
 
 }
 
-module.exports = initializeCart
+module.exports = initializeCart;

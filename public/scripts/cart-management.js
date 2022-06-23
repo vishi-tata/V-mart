@@ -32,8 +32,6 @@ async function addToCart(){
     const responseData = await response.json();
 
     const newTotalQuantity = responseData.newTotalItems;
-    console.log(newTotalQuantity);
-    console.dir(cartBadgeElement);
     cartBadgeElement.textContent = newTotalQuantity;
 
 }
