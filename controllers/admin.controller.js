@@ -1,15 +1,15 @@
-
+const Order = require("../models/order.model");
 const Product = require("../models/product.model");
 
 
-async function getProducts(req, res,next) {
-    try{
-        const products = await Product.findAll();
-        res.render("admin/products/all-products",{products: products});
-    } catch(error){
-        next(error);
-        return;
-    }
+async function getProducts(req, res, next) {
+  try {
+    const products = await Product.findAll();
+    res.render("admin/products/all-products", { products: products });
+  } catch (error) {
+    next(error);
+    return;
+  }
 }
 
 function getNewProduct(req, res) {
@@ -30,29 +30,29 @@ async function createNewProduct(req, res, next) {
   res.redirect("/admin/products");
 }
 
-async function getUpdateProduct(req,res,next){
+async function getUpdateProduct(req, res, next) {
   let product;
-  try{
+  try {
     product = await Product.findProductById(req.params.id);
-    res.render("admin/products/update-product",{product: product});
-  } catch(error){
+    res.render("admin/products/update-product", { product: product });
+  } catch (error) {
     next(error);
   }
 }
 
-async function updateProduct(req,res,next){
+async function updateProduct(req, res, next) {
   const product = new Product({
     ...req.body,
     _id: req.params.id,
   })
 
-  if(req.file){
+  if (req.file) {
     product.replaceImage(req.file.filename);
   }
 
-  try{
+  try {
     await product.save()
-  } catch(error){
+  } catch (error) {
     next(error);
     return;
   }
@@ -60,16 +60,40 @@ async function updateProduct(req,res,next){
   res.redirect("/admin/products");
 }
 
-async function deleteProduct(req,res,next){
-  try{
+async function deleteProduct(req, res, next) {
+  try {
     const product = await Product.findProductById(req.params.id);
     await product.remove();
-  } catch(error){
+  } catch (error) {
     next(error);
     return;
   }
-  
-  res.json({message: "Deleted Product!"});
+
+  res.json({ message: "Deleted Product!" });
+}
+
+async function getOrders(req, res, next) {
+  let orders;
+  try {
+    orders = await Order.findAll();
+    res.render("admin/orders/all-orders", { orders: orders });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function updateOrder(res, req, next) {
+  const orderId = req.params.id;
+  const newStatus = req.body.newStatus;
+  let order;
+  try {
+    order = await Order.findById(orderId);
+    order.status = newStatus;
+    await order.save();
+    res.json({ message: "Order Updated", newStatus: newStatus });
+  } catch (error) {
+    next(error);
+  }
 }
 
 module.exports = {
@@ -79,4 +103,6 @@ module.exports = {
   getUpdateProduct: getUpdateProduct,
   updateProduct: updateProduct,
   deleteProduct: deleteProduct,
+  getOrders: getOrders,
+  updateOrder: updateOrder,
 };

@@ -20,7 +20,7 @@ async function updateCart(event){
                 _csrf: csrfToken,
             }),
             headers:{
-                "content-type":"application/json"
+                "Content-Type":"application/json"
             }
         });
     }catch(error){
