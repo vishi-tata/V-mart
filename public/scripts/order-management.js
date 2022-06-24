@@ -33,8 +33,8 @@ async function updateOrderStatus(event){
 
     const responseData = await response.json();
 
-    /*const orderStatusBadgeElement = */formElement.parentElement.parentElement.querySelector(".badge").textContent = responseData.newStatus.toUpperCase();
-    // orderStatusBadgeElement.textContent = responseData.newStatus;
+    formElement.parentElement.parentElement.querySelector(".badge").textContent = responseData.newStatus.toUpperCase();
+    
 }
 
 for(const orderUpdateFormElement of orderUpdateFormElements){
