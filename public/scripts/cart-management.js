@@ -1,14 +1,12 @@
 const addToCartButtonElement = document.querySelector("#product-details button");
-const cartBadgeElement =document.querySelector(".nav-items .badge")
+const cartBadgeElements = document.querySelectorAll(".nav-items .badge");
 
-addToCartButtonElement.addEventListener("click",addToCart);
-
-async function addToCart(){
+async function addToCart() {
     const productId = addToCartButtonElement.dataset.productid;
     const csrfToken = addToCartButtonElement.dataset.csrf;
     let response;
-    try{
-        response = await fetch("/cart/items",{
+    try {
+        response = await fetch("/cart/items", {
             method: "POST",
             body: JSON.stringify({
                 productId: productId,
@@ -18,20 +16,22 @@ async function addToCart(){
                 "Content-Type": "application/json"
             }
         });
-    } catch (error){
+    } catch (error) {
         alert("something went wrong");
         return;
     }
-    
 
-    if(!response.ok){
+
+    if (!response.ok) {
         alert("something went wrong");
         return;
     }
 
     const responseData = await response.json();
-
     const newTotalQuantity = responseData.newTotalItems;
-    cartBadgeElement.textContent = newTotalQuantity;
-
+    for(const cartBadgeElement of cartBadgeElements){
+        cartBadgeElement.textContent = newTotalQuantity;
+    }
 }
+
+addToCartButtonElement.addEventListener("click", addToCart);

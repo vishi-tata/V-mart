@@ -19,7 +19,4 @@ async function deleteProduct(event) {
     }
     
     buttonElement.parentElement.parentElement.parentElement.parentElement.remove();
-
-
-
 }
