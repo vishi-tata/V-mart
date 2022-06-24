@@ -63,7 +63,7 @@ class Order{
     }
 
     static async findById(orderId){
-        const order = await db.getDb().collection("orders").find({_id: new mongodb.ObjectId(orderId)});
+        const order = await db.getDb().collection("orders").findOne({_id: new mongodb.ObjectId(orderId)});
         return this.transformOrderDocument(order);
     }
 }
