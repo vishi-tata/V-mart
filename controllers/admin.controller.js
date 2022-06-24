@@ -82,7 +82,7 @@ async function getOrders(req, res, next) {
   }
 }
 
-async function updateOrder(res, req, next) {
+async function updateOrder(req, res, next) {
   const orderId = req.params.id;
   const newStatus = req.body.newStatus;
   let order;
