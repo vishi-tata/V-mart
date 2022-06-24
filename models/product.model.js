@@ -1,4 +1,4 @@
-const mongoDb = require("mongodb");
+const mongodb = require("mongodb");
 
 const db = require("../data/database");
 
@@ -21,7 +21,22 @@ class Product {
     return products.map(function (productDocument) {
       return new Product(productDocument);
     });
+  }
 
+  static async findMultiple(ids) {
+    const productIds = ids.map(function(id) {
+      return new mongodb.ObjectId(id);
+    })
+    
+    const products = await db
+      .getDb()
+      .collection('products')
+      .find({ _id: { $in: productIds } })
+      .toArray();
+
+    return products.map(function (productDocument) {
+      return new Product(productDocument);
+    });
   }
 
   async save() {
@@ -34,7 +49,7 @@ class Product {
     }
 
     if(this.id){
-      const prodId = new mongoDb.ObjectId(this.id);
+      const prodId = new mongodb.ObjectId(this.id);
 
       if(!this.image){
         delete productData.image;
@@ -49,7 +64,7 @@ class Product {
   static async findProductById(id) {
     let prodId;
     try {
-      prodId = new mongoDb.ObjectId(id);
+      prodId = new mongodb.ObjectId(id);
     } catch (error) {
       error.code = 404;
       throw error;
@@ -75,7 +90,7 @@ class Product {
   }
 
   remove(){
-    const prodId = new mongoDb.ObjectId(this.id);
+    const prodId = new mongodb.ObjectId(this.id);
     return db.getDb().collection("products").deleteOne({_id: prodId})
   }
 }

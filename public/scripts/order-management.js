@@ -1,42 +1,45 @@
-const orderUpdateFormElements = document.querySelectorAll(".order-actions form");
-
-async function updateOrderStatus(event){
+const updateOrderFormElements = document.querySelectorAll(
+    '.order-actions form'
+  );
+  
+  async function updateOrder(event) {
     event.preventDefault();
-    const formElement = event.target;
-    const formData = new FormData(formElement);
-    const orderCsrfToken = formData.get("_csrf");
-    const orderId = formData.get("orderid");
-    const newStatus = formData.get("status");
-
+    const form = event.target;
+  
+    const formData = new FormData(form);
+    const newStatus = formData.get('status');
+    const orderId = formData.get('orderid');
+    const csrfToken = formData.get('_csrf');
+  
     let response;
-
-    try{
-        response = await fetch(`admin/orders/${orderId}`,{
-            method: "PATCH",
-            body:JSON.stringify({
-                newStatus: newStatus,
-                _csrf: orderCsrfToken,
-            }),
-            headers:{
-                "Content-Type":"application.json"
-            }
-        });
-    }catch(error){
-        alert("something went wrong");
-        return;
+  
+    try {
+      response = await fetch(`/admin/orders/${orderId}`, {
+        method: 'PATCH',
+        body: JSON.stringify({
+          newStatus: newStatus,
+          _csrf: csrfToken,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error) {
+      alert('Something went wrong - could not update order status.');
+      return;
     }
-
-    if(!response.ok){
-        alert("something went wrong");
-        return;
+  
+    if (!response.ok) {
+      alert('Something went wrong - could not update order status.');
+      return;
     }
-
+  
     const responseData = await response.json();
-
-    formElement.parentElement.parentElement.querySelector(".badge").textContent = responseData.newStatus.toUpperCase();
-    
-}
-
-for(const orderUpdateFormElement of orderUpdateFormElements){
-    orderUpdateFormElement.addEventListener("submit",updateOrderStatus);
-}
+  
+    form.parentElement.parentElement.querySelector('.badge').textContent =
+      responseData.newStatus.toUpperCase();
+  }
+  
+  for (const updateOrderFormElement of updateOrderFormElements) {
+    updateOrderFormElement.addEventListener('submit', updateOrder);
+  }
