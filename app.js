@@ -4,6 +4,12 @@ const express = require("express");
 const csrf = require("csurf");
 const expressSession = require("express-session");
 
+let port = 3000;
+
+if(process.env.PORT){
+    port = process.env.PORT;
+}
+
 const db = require("./data/database");
 const baseRoutes = require("./routes/base.routes");
 const authRoutes = require("./routes/auth.routes");
@@ -54,7 +60,7 @@ app.use(notFoundHandlerMiddleware);
 app.use(errorHandlerMiddleware);
 
 db.connectToDatabase().then(function () {
-    app.listen(3000);
+    app.listen(port);
 }).catch(function (error) {
     console.log("Failed to connect to database!");
     console.log(error)
