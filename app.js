@@ -6,7 +6,7 @@ const expressSession = require("express-session");
 
 let port = 3000;
 
-if(process.env.PORT){
+if (process.env.PORT) {
     port = process.env.PORT;
 }
 
@@ -25,6 +25,7 @@ const cartMiddleware = require("./middlewares/cart");
 const updateCartPricesMiddleware = require("./middlewares/update-cart-prices");
 const notFoundHandlerMiddleware = require("./middlewares/not-found");
 const createSessionConfig = require("./config/session");
+const createCloudinaryConfig = require("./config/cloudinary.config");
 
 
 const app = express();
@@ -48,12 +49,14 @@ app.use(updateCartPricesMiddleware);
 app.use(csrfTokenMiddleware);
 app.use(checkAuthStatusMiddleware);
 
+createCloudinaryConfig();
+
 app.use(baseRoutes);
 app.use(authRoutes);
 app.use(productsRoutes);
 app.use("/cart", cartRoutes);
-app.use("/orders",protectRoutesMiddleware,ordersRoutes);
-app.use("/admin",protectRoutesMiddleware, adminRoutes);
+app.use("/orders", protectRoutesMiddleware, ordersRoutes);
+app.use("/admin", protectRoutesMiddleware, adminRoutes);
 
 app.use(notFoundHandlerMiddleware);
 
