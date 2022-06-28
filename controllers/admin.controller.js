@@ -1,3 +1,4 @@
+const cloudinaryUploadFunction = require("../middlewares/cloudinary");
 const Order = require("../models/order.model");
 const Product = require("../models/product.model");
 
@@ -21,6 +22,8 @@ async function createNewProduct(req, res, next) {
     ...req.body,
     image: req.file.filename,
   });
+  const remoteUrl = await cloudinaryUploadFunction(product.imagePath,product.image);
+  product.updateRemoteUrl(remoteUrl)
   try {
     await product.save();
   } catch (error) {
@@ -48,6 +51,8 @@ async function updateProduct(req, res, next) {
 
   if (req.file) {
     product.replaceImage(req.file.filename);
+    const remoteUrl = await cloudinaryUploadFunction(product.imagePath,product.image);
+    product.updateRemoteUrl(remoteUrl)
   }
 
   try {

@@ -13,6 +13,7 @@ class Product {
     if (productData._id) {
       this.id = productData._id.toString();
     }
+    this.remoteUrl = productData.remoteUrl;
   }
 
   static async findAll() {
@@ -45,6 +46,7 @@ class Product {
       price: this.price,
       description: this.description,
       image: this.image,
+      remoteUrl: this.remoteUrl
     }
 
     if(this.id){
@@ -85,7 +87,10 @@ class Product {
 
   updateImageData(){
     this.imagePath = `product-data/images/${this.image}`;
-    this.imageUrl = `/products/assets/images/${this.image}`;
+  }
+
+  updateRemoteUrl(remoteUrl){
+    this.remoteUrl = remoteUrl;
   }
 
   remove(){
