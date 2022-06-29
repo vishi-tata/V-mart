@@ -4,6 +4,11 @@
         <h2>
             <%= product.title %>
         </h2>
+        <% if(!locals.isAdmin) { %> 
+        <p>
+            <%= product.summary %> 
+        </p>
+        <% } %> 
         <div class="product-item-actions">
             <% if(locals.isAdmin) { %>
             <a href="/admin/products/<%= product.id %>" class="btn btn-alt">View&Edit</a>

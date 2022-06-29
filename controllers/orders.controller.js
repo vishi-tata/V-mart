@@ -36,7 +36,7 @@ async function addOrder(req, res, next) {
                     product_data: {
                         name: item.product.title,
                     },
-                    unit_amount: +item.product.price.toFixed(2)*100,
+                    unit_amount: +item.product.price*100,
                 },
                 quantity: item.quantity,
             }

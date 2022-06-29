@@ -46,7 +46,7 @@ async function updateCart(event){
         cartBadgeElement.textContent = responseData.updatedCartData.newTotalQuantity;
     }
 
-    cartTotalPriceElement.textContent = responseData.updatedCartData.newTotalPrice.toFixed(2);
+    cartTotalPriceElement.textContent = responseData.updatedCartData.newTotalPrice;
 }
 
 for(const cartItemUpdtationFormElement of cartItemUpdtationFormElements){
