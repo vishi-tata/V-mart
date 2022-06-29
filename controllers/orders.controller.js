@@ -54,7 +54,7 @@ function getSuccess(req,res){
 }
 
 function getFailure(req,res){
-    res.render("customer/orders/success");
+    res.render("customer/orders/failure");
 }
 
 module.exports = {
