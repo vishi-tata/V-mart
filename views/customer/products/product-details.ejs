@@ -12,6 +12,14 @@
                         <p>₹<%= product.price %></p>
                         <p><%= product.summary %></p>
                         <button class="btn" data-productid="<%= product.id %>" data-csrf="<%= locals.csrfToken %>">Add to Cart</button>
+                        <% if(locals.cart) { %>
+                            <form action="/cart" method="GET">
+                                <button class="btn btn-alt" id="go-to-cart">Go to Cart</button>
+                            </form>
+                        <% } %> 
+                        <form action="/" method="GET">
+                            <button class="btn btn-alt">Back to Products</button>
+                        </form>
                     </div>
                 </header>
 

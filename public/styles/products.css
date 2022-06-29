@@ -63,6 +63,7 @@
   white-space: pre-wrap;
 }
 
+
 @media (min-width: 48rem) {
   #product-details header {
     display: flex;
@@ -75,7 +76,7 @@
     margin: var(--space-8);
   }
 
-  #product-info {
+  /* #product-info {
     text-align: left;
-  }
+  } */
 }

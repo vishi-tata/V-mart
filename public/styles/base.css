@@ -71,11 +71,13 @@ a {
   color: var(--color-primary-500-contrast);
   border: 1px solid var(--color-primary-500);
   border-radius: var(--border-radius-small);
+  margin: var(--space-1) 0;
 }
 
 .btn-alt{
   background-color: transparent;
   color: var(--color-primary-500);
+  margin: var(--space-1) 0;
 }
 
 .btn:hover,
