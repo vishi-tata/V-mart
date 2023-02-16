@@ -4,7 +4,7 @@ const MongoClient = mongodb.MongoClient;
 
 let database;
 
-let mongodbUrl = 'mongodb+srv://vishnuTata:KYBd9JsVl4zUBr1q@cluster0.n6v94.mongodb.net/?retryWrites=true&w=majority';
+let mongodbUrl = 'http://localhost:9000';
 
 if (process.env.MONGODB_URL) {
   mongodbUrl = process.env.MONGODB_URL;
