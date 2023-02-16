@@ -10,6 +10,31 @@ async function getOrders(req, res) {
 
 async function addOrder(req, res, next) {
     const cart = res.locals.cart;
+    const session = await stripe.checkout.sessions.create({
+        line_items: cart.items.map(function (item) {
+            return {
+                price_data: {
+                    currency: "inr",
+                    product_data: {
+                        name: item.product.title,
+                    },
+                    unit_amount: +item.product.price * 100,
+                },
+                quantity: item.quantity,
+            }
+        }),
+        mode: 'payment',
+        success_url: `http://localhost:3000/orders/success`,
+        cancel_url: `http://localhost:3000/orders/failure`,
+    });
+
+    console.log(session);
+
+    res.redirect(303, session.url);
+}
+
+async function getSuccess(req, res) {
+    const cart = res.locals.cart;
     let userData
     try {
         userData = await User.findUserById(res.locals.uid);
@@ -18,6 +43,9 @@ async function addOrder(req, res, next) {
         next(error);
         return;
     }
+
+
+    req.session.cart = null;
     const order = new Order(cart, userData);
 
     try {
@@ -25,35 +53,11 @@ async function addOrder(req, res, next) {
     } catch (error) {
         return next(error);
     }
-
-    req.session.cart = null;
-
-    const session = await stripe.checkout.sessions.create({
-        line_items: cart.items.map(function(item) {
-            return {
-                price_data: {
-                    currency: "inr",
-                    product_data: {
-                        name: item.product.title,
-                    },
-                    unit_amount: +item.product.price*100,
-                },
-                quantity: item.quantity,
-            }
-        }),
-        mode: 'payment',
-        success_url: `http://pure-gorge-19892.herokuapp.com/orders/success`,
-        cancel_url: `http://pure-gorge-19892.herokuapp.com/orders/failure`,
-    });
-
-    res.redirect(303, session.url);
-}
-
-function getSuccess(req,res){
     res.render("customer/orders/success");
 }
 
-function getFailure(req,res){
+function getFailure(req, res) {
+    req.session.cart = null;
     res.render("customer/orders/failure");
 }
 
